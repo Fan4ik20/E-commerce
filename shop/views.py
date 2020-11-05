@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Category, Product
 
+
 # Create your views here.
 
 
@@ -20,5 +21,10 @@ def home(request, category_slug=None):
                                               'products': products})
 
 
-def product(request):
-    return render(request, 'shop/product.html')
+def product(request, category_slug, product_slug):
+    try:
+        product_ = Product.objects.get(category__slug=category_slug,
+                                       slug=product_slug)
+    except Exception as e:
+        raise e
+    return render(request, 'shop/product.html', {'product': product_})

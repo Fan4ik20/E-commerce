@@ -8,27 +8,23 @@
     <div class="container py-5">
         <div class="row mt-5">
             <div class="col-10 mx-auto col-md-6 my-3">
-                <img src="{% static 'images/2.jpeg' %}" alt="">
+                <img src="{{ product.image.url }}" alt="">
             </div>
         </div>
     </div>
     <div class="col-10 mx-auto col-md-6 my-3">
         <div>
-            <h1 class="product_title">Shoes</h1>
-            <h5 class="text-info font-italic mb-4">$6.50</h5>
-            <p class="product_desc">Product desctription</p>
+            <h1 class="product_title">{{ product.name }}</h1>
+            <h5 class="text-info font-italic mb-4">{{ product.price }}</h5>
+            <p class="product_desc">Product Description</p>
             <p class="text-justify product-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie egestas erat,
-                in vestibulum metus. Etiam nisl lacus, congue nec lectus quis, molestie tincidunt ligula.
-                Curabitur rutrum est ligula, at imperdiet turpis laoreet dapibus. Etiam sagittis ipsum
-                in enim eleifend, sit amet mollis lacus bibendum. Quisque volutpat mi vitae pellentesque
-                tempor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec vehicula
-                nulla id libero ullamcorper, et volutpat lacus auctor. Cras fringilla ultricies arcu eget
-                dictum. Fusce a ante eget orci tincidunt convallis. Proin at lectus at nulla gravida
-                hendrerit. Nullam tristique ac arcu at vulputate. Cras commodo sem turpis, vitae semper
-                libero tincidunt vitae.
+                {{ product.description }}
             </p>
-            <p class="text-justify product_text">Out of stock</p>
+            {% if product.stock <= 0 %}
+                <p class="text-justify product_text">Out of stock</p>
+            {% else %}
+                <a href="">Add to cart</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
