@@ -6,6 +6,16 @@
     Cart
 {% endblock %}
 {% block content %}
+
+    {% if not cart_items %}
+        <div class="text-center">
+            <br>
+            <h1 class="text-center product_title">Your cart is empty</h1>
+            <br>
+            <p class="text-center">Click <a href="{% url 'home' %}">here</a> to go back to products</p>
+        </div>
+   {% else %}
+
     <div class="text-center">
         <br>
         <div class="text-center product_title">
@@ -22,30 +32,41 @@
                         </th>
                     </tr>
                 </thead>
-                {% for i in '123' %}
+                {% for cart_item in cart_items %}
                     <tr>
-                        <td><a href="">
-                            <img src="{% static 'images/1.jpeg' %}"
+                        <td><a href="{{ cart_item.product.get_url }}">
+                            <img src="{{ cart_item.product.image.url }}"
                             width="100" height="100">
                         </a>
                         </td>
                         <td class="text-left">
-                            Beauty
+                            {{ cart_item.product.name }}
                             <br>
-                            SKU: 7
+                            SKU: {{ cart_item.product.id }}
                             <br>
-                            Unit price: 20$
+                            Unit price: {{ cart_item.product.price }}$
                             <br>
-                            Quantity 3x20$
+                            Quantity {{ cart_item.quantity }} x {{ cart_item.product.price }}
                         </td>
                         <td>
-                            60$
+                            {{ cart_item.sub_total }}$
                         </td>
-                        <td>
-                            <a href=""><i class="material-icons cart-icon">add_shopping_cart</i></a>
-                            <a href=""><i class="material-icons cart-icon">remove_circle_outline</i></a>
-                            <a href=""><i class="material-icons cart-icon">delete</i></a>
-                        </td>
+                        {% if cart_item.quantity < cart_item.product.stock %}
+                            <td>
+                                <a href="{% url 'add_cart' cart_item.product.id %}">
+                                    <i class="material-icons cart-icon">add_shopping_cart</i>
+                                </a>
+                                <a href=""><i class="material-icons cart-icon">remove_circle_outline</i></a>
+                                <a href=""><i class="material-icons cart-icon">delete</i></a>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href=""><i class="material-icons cart-icon">remove_circle_outline</i></a>
+                                <a href=""><i class="material-icons cart-icon">delete</i></a>
+                            </td>
+                        {% endif %}
+
+
                     </tr>
                 {% endfor %}
             </table>
@@ -67,13 +88,13 @@
                     </tr>
                     <tr>
                         <td class="text-left">
-                            Your total bill is: <strong>60$</strong>
+                            Your total bill is: <strong>{{ total }}$</strong>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="mx-auto">
-                <a href="" style="text-decoration: None">
+                <a href="{% url 'home' %}" style="text-decoration: None">
                     <button type="button" class="btn btn-lg btn-block bg-dark text-white">
                         Back to products
                     </button>
@@ -81,5 +102,6 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
 {% endblock %}
