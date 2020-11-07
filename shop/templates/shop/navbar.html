@@ -16,9 +16,9 @@
                 <li class="nav-item dropdown"><a class="nav-link text-light
                  text-uppercase font-weight-bold px-3 dropdown-toggle" data-toggle="dropdown" href="">Categories</a>
                     <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ category.get_url }}">{{ category.name }}</a>
+                        <a class="dropdown-item" href="{% url 'home' %}">All products</a>
                         {% for category in links %}
-                        <a class="dropdown-item" href="{% url 'home' %} }">All products</a>
+                        <a class="dropdown-item" href="{{ category.get_url }}">{{ category.name }}</a>
                         {% endfor %}
                     </div>
                 </li>
